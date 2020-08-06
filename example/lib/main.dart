@@ -9,12 +9,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Timeline',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Timeline Demo'),
     );
   }
 }
@@ -45,8 +46,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addEvent() {
     setState(() {
-      events.add(EventDisplay(
-          child: Container(height: 100, color: Colors.grey),
+      events.add(TimelineEventDisplay(
+          child: TimelineEventCard(
+            title: Text("title"),
+            content: Text("content"),
+          ),
           indicator: TimelineDots.of(context).simple));
     });
   }
@@ -55,11 +59,14 @@ class _MyHomePageState extends State<MyHomePage> {
     return _buildTimeline();
   }
 
-  List<EventDisplay> events = [
-    EventDisplay(
-      child: Container(height: 200, color: Colors.grey),
+  List<TimelineEventDisplay> events = [
+    TimelineEventDisplay(
+      child: TimelineEventCard(
+        title: Text("title"),
+        content: Text("content"),
+      ),
     ),
-    EventDisplay(
+    TimelineEventDisplay(
       child: Container(height: 100, color: Colors.grey),
     )
   ];

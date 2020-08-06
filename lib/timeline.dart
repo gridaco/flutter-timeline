@@ -5,27 +5,27 @@ class Timeline extends StatelessWidget {
   const Timeline({
     @required this.events,
     this.isLeftAligned = true,
-    this.itemGap = 12.0,
-    this.gutterSpacing = 4.0,
+    this.itemGap = 24.0,
+    this.gutterSpacing = 12.0,
     this.padding = const EdgeInsets.all(8),
     this.controller,
-    this.lineColor = Colors.grey,
+    this.lineColor = Colors.lightBlueAccent,
     this.physics,
     this.shrinkWrap = true,
     this.primary = false,
     this.reverse = false,
-    this.indicatorSize = 30.0,
+    this.indicatorSize = 12.0,
     this.lineGap = 0.0,
     this.indicatorColor = Colors.blue,
     this.indicatorStyle = PaintingStyle.fill,
     this.strokeCap = StrokeCap.butt,
-    this.strokeWidth = 2.0,
+    this.strokeWidth = 4.0,
     this.style = PaintingStyle.stroke,
   })  : itemCount = events.length,
         assert(itemGap >= 0),
         assert(lineGap >= 0);
 
-  final List<EventDisplay> events;
+  final List<TimelineEventDisplay> events;
   final double itemGap;
   final double gutterSpacing;
   final bool isLeftAligned;
