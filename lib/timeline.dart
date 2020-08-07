@@ -8,22 +8,24 @@ class Timeline extends StatelessWidget {
   const Timeline({
     @required this.events,
     this.isLeftAligned = true,
-    this.itemGap = 24.0,
-    this.gutterSpacing = 12.0,
     this.padding = const EdgeInsets.all(8),
     this.controller,
-    this.lineColor = Colors.lightBlueAccent,
     this.physics,
     this.shrinkWrap = true,
     this.primary = false,
     this.reverse = false,
-    this.indicatorSize = 12.0,
-    this.lineGap = 0.0,
-    this.indicatorColor = Colors.blue,
     this.indicatorStyle = PaintingStyle.fill,
-    this.strokeCap = StrokeCap.butt,
+    this.gutterSpacing = 12.0,
+    this.itemGap = 24.0,
+    this.lineGap = 0.0,
+    this.indicatorSize = 12.0,
     this.strokeWidth = 4.0,
+    this.strokeCap = StrokeCap.butt,
+    this.indicatorColor = Colors.blue,
+    this.lineColor = Colors.lightBlueAccent,
     this.style = PaintingStyle.stroke,
+    // item gap will be ignored when custom separatorBuilder is provided
+    this.separatorBuilder,
   })  : itemCount = events.length,
         assert(itemGap >= 0),
         assert(lineGap >= 0);
@@ -48,6 +50,7 @@ class Timeline extends StatelessWidget {
   final StrokeCap strokeCap;
   final double strokeWidth;
   final PaintingStyle style;
+  final IndexedWidgetBuilder separatorBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,8 @@ class Timeline extends StatelessWidget {
 
     return ListView.separated(
       padding: padding,
-      separatorBuilder: (_, __) => SizedBox(height: itemGap),
+      separatorBuilder:
+          separatorBuilder ?? (_, __) => SizedBox(height: itemGap),
       physics: physics,
       shrinkWrap: shrinkWrap,
       itemCount: itemCount,
@@ -93,13 +97,14 @@ class Timeline extends StatelessWidget {
   }
 
   Widget _buildIndicator({bool isFirst, bool isLast, Widget child}) {
-    return CustomPaint(
-      painter: _TimelinePainter(
+    //    return
+    var line = CustomPaint(
+      painter: _LineIndicatorPainter(
         hideDefaultIndicator: child != null,
         lineColor: lineColor,
-        indicatorColor: indicatorColor,
+//        indicatorColor: indicatorColor,
         indicatorSize: indicatorSize,
-        indicatorStyle: indicatorStyle,
+//        indicatorStyle: indicatorStyle,
         isFirst: isFirst,
         isLast: isLast,
         lineGap: lineGap,
@@ -108,20 +113,27 @@ class Timeline extends StatelessWidget {
         style: style,
         itemGap: itemGap,
       ),
-      child: SizedBox(
-        height: double.infinity,
-        width: indicatorSize,
-        child: child,
-      ),
+//      size: const Size(double.infinity, double.infinity),
+      child: SizedBox(height: double.infinity, width: indicatorSize),
+    );
+    return Stack(
+      children: [
+        line,
+        Align(
+          child: SizedBox(
+            width: indicatorSize,
+            height: indicatorSize,
+            child: child,
+          ),
+        )
+      ],
     );
   }
 }
 
-class _TimelinePainter extends CustomPainter {
-  _TimelinePainter({
+class _LineIndicatorPainter extends CustomPainter {
+  _LineIndicatorPainter({
     @required this.hideDefaultIndicator,
-    @required this.indicatorColor,
-    @required this.indicatorStyle,
     @required this.indicatorSize,
     @required this.lineGap,
     @required this.strokeCap,
@@ -131,18 +143,13 @@ class _TimelinePainter extends CustomPainter {
     @required this.isFirst,
     @required this.isLast,
     @required this.itemGap,
-  })  : linePaint = Paint()
+  }) : linePaint = Paint()
           ..color = lineColor
           ..strokeCap = strokeCap
           ..strokeWidth = strokeWidth
-          ..style = style,
-        circlePaint = Paint()
-          ..color = indicatorColor
-          ..style = indicatorStyle;
+          ..style = style;
 
   final bool hideDefaultIndicator;
-  final Color indicatorColor;
-  final PaintingStyle indicatorStyle;
   final double indicatorSize;
   final double lineGap;
   final StrokeCap strokeCap;
@@ -150,7 +157,6 @@ class _TimelinePainter extends CustomPainter {
   final PaintingStyle style;
   final Color lineColor;
   final Paint linePaint;
-  final Paint circlePaint;
   final bool isFirst;
   final bool isLast;
   final double itemGap;
@@ -161,7 +167,7 @@ class _TimelinePainter extends CustomPainter {
     final halfItemGap = itemGap / 2;
     final indicatorMargin = indicatorRadius + lineGap;
 
-    final top = size.topLeft(Offset(indicatorRadius, 0.0 - halfItemGap));
+    final top = size.topLeft(Offset(indicatorRadius, 0.0 - itemGap));
     final centerTop = size.centerLeft(
       Offset(indicatorRadius, -indicatorMargin),
     );
@@ -173,15 +179,10 @@ class _TimelinePainter extends CustomPainter {
 
     if (!isFirst) canvas.drawLine(top, centerTop, linePaint);
     if (!isLast) canvas.drawLine(centerBottom, bottom, linePaint);
-
-    if (!hideDefaultIndicator) {
-      final Offset offsetCenter = size.centerLeft(Offset(indicatorRadius, 0));
-      canvas.drawCircle(offsetCenter, indicatorRadius, circlePaint);
-    }
   }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
+    return true;
   }
 }

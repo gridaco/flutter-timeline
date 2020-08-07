@@ -21,14 +21,16 @@ class TimelineDots {
 
   Widget get borderDot {
     return Container(
-      width: 12,
-      height: 12,
       decoration: BoxDecoration(
           color: Theme.of(context).accentColor,
           image: null,
           borderRadius: BorderRadius.all(Radius.circular(16)),
           border: Border.all()),
     );
+  }
+
+  Widget get icon {
+    return Icon(Icons.event);
   }
 
   Widget get section {
@@ -40,6 +42,28 @@ class TimelineDots {
         image: null,
         shape: BoxShape.circle,
       ),
+    );
+  }
+
+  Widget get circleIcon {
+    return Container(
+      width: 24,
+      height: 24,
+      child: Icon(
+        Icons.event,
+        color: Colors.white,
+      ),
+      decoration: BoxDecoration(
+          color: Colors.lightBlue,
+          borderRadius: BorderRadius.all(
+            Radius.circular(64),
+          ),
+          boxShadow: [
+            BoxShadow(
+                color: Colors.lightBlueAccent,
+                blurRadius: 16,
+                offset: Offset(0, 4))
+          ]),
     );
   }
 

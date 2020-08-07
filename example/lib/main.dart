@@ -51,7 +51,7 @@ class _DemoHomePageState extends State<DemoHomePage> {
             title: Text("title"),
             content: Text("content"),
           ),
-          indicator: TimelineDots.of(context).borderDot));
+          indicator: TimelineDots.of(context).circleIcon));
     });
   }
 
@@ -73,6 +73,7 @@ class _DemoHomePageState extends State<DemoHomePage> {
 
   Widget _buildTimeline() {
     return Timeline(
+      indicatorSize: 56,
       indicatorStyle: PaintingStyle.stroke,
       events: events,
     );
