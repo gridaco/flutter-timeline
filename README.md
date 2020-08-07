@@ -1,4 +1,10 @@
-# flutter_timeline
+# flutter_timeline ![](https://img.shields.io/badge/pub-0.0.3-brightgreen)
+
+
+
+
+
+
 
 ![logo](docs/images/logo.png)
 

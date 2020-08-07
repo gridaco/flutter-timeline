@@ -164,15 +164,15 @@ class _LineIndicatorPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final indicatorRadius = indicatorSize / 2;
-    final halfItemGap = itemGap / 2;
     final indicatorMargin = indicatorRadius + lineGap;
+    final safeItemGap = indicatorMargin + 0.0;
 
-    final top = size.topLeft(Offset(indicatorRadius, 0.0 - itemGap));
+    final top = size.topLeft(Offset(indicatorRadius, 0.0 - safeItemGap));
     final centerTop = size.centerLeft(
       Offset(indicatorRadius, -indicatorMargin),
     );
 
-    final bottom = size.bottomLeft(Offset(indicatorRadius, 0.0 + halfItemGap));
+    final bottom = size.bottomLeft(Offset(indicatorRadius, 0.0 + safeItemGap));
     final centerBottom = size.centerLeft(
       Offset(indicatorRadius, indicatorMargin),
     );
