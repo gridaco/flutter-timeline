@@ -104,7 +104,7 @@ class Timeline extends StatelessWidget {
 
   Widget _buildIndicator({bool isFirst, bool isLast, Widget child}) {
     return CustomPaint(
-      foregroundPainter: _TimelinePainter(
+      painter: _TimelinePainter(
         hideDefaultIndicator: child != null,
         lineColor: lineColor,
         indicatorColor: indicatorColor,

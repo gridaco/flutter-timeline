@@ -51,7 +51,7 @@ class _DemoHomePageState extends State<DemoHomePage> {
             title: Text("title"),
             content: Text("content"),
           ),
-          indicator: TimelineDots.of(context).simple));
+          indicator: TimelineDots.of(context).borderDot));
     });
   }
 
