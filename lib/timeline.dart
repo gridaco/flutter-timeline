@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_timeline/event_item.dart';
 
+class TimelineTheme extends StatelessWidget {
+  final TimelineThemeData data;
+  final Widget child;
+
+  const TimelineTheme({Key key, this.data, this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return child;
+  }
+}
+
+class TimelineThemeData {}
+
 class Timeline extends StatelessWidget {
   const Timeline({
     @required this.events,
@@ -48,6 +62,7 @@ class Timeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return ListView.separated(
       padding: padding,
       separatorBuilder: (_, __) => SizedBox(height: itemGap),
@@ -171,7 +186,6 @@ class _TimelinePainter extends CustomPainter {
 
     if (!hideDefaultIndicator) {
       final Offset offsetCenter = size.centerLeft(Offset(indicatorRadius, 0));
-
       canvas.drawCircle(offsetCenter, indicatorRadius, circlePaint);
     }
   }

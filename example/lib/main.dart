@@ -73,6 +73,7 @@ class _DemoHomePageState extends State<DemoHomePage> {
 
   Widget _buildTimeline() {
     return Timeline(
+      indicatorStyle: PaintingStyle.stroke,
       events: events,
     );
   }
