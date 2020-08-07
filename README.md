@@ -1,6 +1,8 @@
 # flutter_timeline
 
-a fully customizable & general timeline widget, based on real-world application references
+![logo](docs/images/logo.png)
+
+> a fully customizable & general timeline widget, based on real-world application references
 
 ## Installation
 ```yaml
