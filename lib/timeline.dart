@@ -1,19 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timeline/event_item.dart';
-
-class TimelineTheme extends StatelessWidget {
-  final TimelineThemeData data;
-  final Widget child;
-
-  const TimelineTheme({Key key, this.data, this.child}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return child;
-  }
-}
-
-class TimelineThemeData {}
+import 'package:flutter_timeline/timeline_theme.dart';
+import 'package:flutter_timeline/timeline_theme_data.dart';
 
 class Timeline extends StatelessWidget {
   const Timeline({
@@ -62,6 +51,7 @@ class Timeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TimelineThemeData timelineTheme = TimelineTheme.of(context);
 
     return ListView.separated(
       padding: padding,
