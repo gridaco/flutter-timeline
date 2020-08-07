@@ -66,6 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ```
 
+## references
+https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
+
+
 ## simple example
 ![demo app](./docs/images/mac-ss.png)
 

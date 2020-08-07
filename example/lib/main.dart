@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_timeline/flutter_timeline.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(TimelineDemoApp());
 }
 
-class MyApp extends StatelessWidget {
+class TimelineDemoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,20 +15,20 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Timeline Demo'),
+      home: DemoHomePage(title: 'Flutter Timeline Demo'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class DemoHomePage extends StatefulWidget {
+  DemoHomePage({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _DemoHomePageState createState() => _DemoHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _DemoHomePageState extends State<DemoHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
