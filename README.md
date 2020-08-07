@@ -72,5 +72,7 @@ https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
 
 ## simple example
 ![demo app](./docs/images/mac-ss.png)
+![demo app](./docs/images/mac-ss-2.png)
+![demo app](./docs/images/mac-ss-3.png)
 
 more documentation available at [github](https://github.com/softmarshmallow/flutter-timeline)
