@@ -8,6 +8,14 @@
 
 > a fully customizable & general timeline widget, based on real-world application references
 
+- ✅ fully customizable indicator dot
+- ✅ support spacing between indicator dot and lines
+- ✅ support spacing between event (items) but leaving the line connected
+- ✅ uses custom paint, but yet, indicator and body are fully customizable.
+- ✅ 2 real-world demos
+- ✅ L2R support
+
+
 ## Installation
 ```yaml
 dependencies:
@@ -17,59 +25,31 @@ dependencies:
 
 ## usage
 ```dart
+  TimelineEventDisplay get plainEventDisplay {
+    return TimelineEventDisplay(
+        child: TimelineEventCard(
+          title: Text("just now"),
+          content: Text("someone commented on your timeline ${DateTime.now()}"),
+        ),
+        indicator: TimelineDots.of(context).circleIcon);
+  }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  List<TimelineEventDisplay> events;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: _buildBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addEvent,
-        tooltip: 'add new event',
-        child: Icon(Icons.add),
-      ),
-    );
+  Widget _buildTimeline() {
+    return TimelineTheme(
+        data: TimelineThemeData(lineColor: Colors.blueAccent),
+        child: Timeline(
+          indicatorSize: 56,
+          events: events,
+        ));
   }
 
   void _addEvent() {
     setState(() {
-      events.add(EventDisplay(
-          child: Container(height: 100, color: Colors.grey),
-          indicator: TimelineDots.of(context).simple));
+      events.add(plainEventDisplay);
     });
   }
-
-  Widget _buildBody() {
-    return _buildTimeline();
-  }
-
-  List<EventDisplay> events = [
-    EventDisplay(
-      child: Container(height: 200, color: Colors.grey),
-    ),
-    EventDisplay(
-      child: Container(height: 100, color: Colors.grey),
-    )
-  ];
-
-  Widget _buildTimeline() {
-    return Timeline(
-      events: events,
-    );
-  }
-}
-
 ```
 
 ## references
