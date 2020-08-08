@@ -14,6 +14,7 @@
 - ✅  uses custom paint, but yet, indicator and body are fully customizable.
 - ✅  2 real-world demos
 - ✅  L2R support
+- ✅  supported & used by [enterprise](https://github.com/genoplan), constantly updated, used on production application.
 
 
 ## Installation
