@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_timeline/flutter_timeline.dart';
+import 'package:flutter_timeline/timeline_theme.dart';
+import 'package:flutter_timeline/timeline_theme_data.dart';
 
 class PlainTimelineDemoScreen extends StatefulWidget {
   static const routeName = "/demo/plain";
@@ -51,11 +53,12 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
   List<TimelineEventDisplay> events;
 
   Widget _buildTimeline() {
-    return Timeline(
-      indicatorSize: 56,
-      indicatorStyle: PaintingStyle.stroke,
-      events: events,
-    );
+    return TimelineTheme(
+        data: TimelineThemeData(lineColor: Colors.blueAccent),
+        child: Timeline(
+          indicatorSize: 56,
+          events: events,
+        ));
   }
 
   void _addEvent() {

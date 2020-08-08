@@ -1,6 +1,4 @@
-# flutter_timeline [![](https://img.shields.io/badge/pub-0.0.3-brightgreen)](https://pub.dev/packages/flutter_timeline)
-
-
+# flutter_timeline [![](https://img.shields.io/badge/pub-latest-brightgreen)](https://pub.dev/packages/flutter_timeline)
 
 
 

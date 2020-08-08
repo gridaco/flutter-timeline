@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_timeline/flutter_timeline.dart';
 import 'package:flutter_timeline/timeline.dart';
 
 class CmsCommentsDemoScreen extends StatefulWidget {
@@ -42,7 +43,21 @@ class _CmsCommentsDemoScreenState extends State<CmsCommentsDemoScreen> {
     );
   }
 
+  _buildTodaySection() {
+    return Text(
+      "Today",
+      style:
+          Theme.of(context).textTheme.headline5.copyWith(color: Colors.amber),
+    );
+  }
+
   Widget buildTimeline() {
-    return Timeline(events: []);
+    return Timeline(events: [
+      TimelineEventDisplay(
+          child: _buildTodaySection(),
+          indicator: Container(
+            color: Colors.amber,
+          )),
+    ]);
   }
 }

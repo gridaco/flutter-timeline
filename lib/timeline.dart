@@ -14,25 +14,13 @@ class Timeline extends StatelessWidget {
     this.shrinkWrap = true,
     this.primary = false,
     this.reverse = false,
-    this.indicatorStyle = PaintingStyle.fill,
-    this.gutterSpacing = 12.0,
-    this.itemGap = 24.0,
-    this.lineGap = 0.0,
     this.indicatorSize = 12.0,
-    this.strokeWidth = 4.0,
-    this.strokeCap = StrokeCap.butt,
-    this.indicatorColor = Colors.blue,
-    this.lineColor = Colors.lightBlueAccent,
-    this.style = PaintingStyle.stroke,
     // item gap will be ignored when custom separatorBuilder is provided
     this.separatorBuilder,
-  })  : itemCount = events.length,
-        assert(itemGap >= 0),
-        assert(lineGap >= 0);
+  }) : itemCount = events.length;
 
   final List<TimelineEventDisplay> events;
-  final double itemGap;
-  final double gutterSpacing;
+  final double indicatorSize;
   final bool isLeftAligned;
   final EdgeInsets padding;
   final ScrollController controller;
@@ -42,14 +30,6 @@ class Timeline extends StatelessWidget {
   final bool primary;
   final bool reverse;
 
-  final Color lineColor;
-  final double lineGap;
-  final double indicatorSize;
-  final Color indicatorColor;
-  final PaintingStyle indicatorStyle;
-  final StrokeCap strokeCap;
-  final double strokeWidth;
-  final PaintingStyle style;
   final IndexedWidgetBuilder separatorBuilder;
 
   @override
@@ -58,8 +38,8 @@ class Timeline extends StatelessWidget {
 
     return ListView.separated(
       padding: padding,
-      separatorBuilder:
-          separatorBuilder ?? (_, __) => SizedBox(height: itemGap),
+      separatorBuilder: separatorBuilder ??
+          (_, __) => SizedBox(height: timelineTheme.itemGap),
       physics: physics,
       shrinkWrap: shrinkWrap,
       itemCount: itemCount,
@@ -80,8 +60,12 @@ class Timeline extends StatelessWidget {
 
         final timelineTile = <Widget>[
           if (event.hasIndicator)
-            _buildIndicator(isFirst: isFirst, isLast: isLast, child: indicator),
-          if (event.hasIndicator) SizedBox(width: gutterSpacing),
+            _buildIndicator(
+                isFirst: isFirst,
+                isLast: isLast,
+                child: indicator,
+                theme: timelineTheme),
+          if (event.hasIndicator) SizedBox(width: timelineTheme.gutterSpacing),
           Expanded(child: event.child),
         ];
 
@@ -96,22 +80,21 @@ class Timeline extends StatelessWidget {
     );
   }
 
-  Widget _buildIndicator({bool isFirst, bool isLast, Widget child}) {
+  Widget _buildIndicator(
+      {bool isFirst, bool isLast, Widget child, TimelineThemeData theme}) {
     //    return
     var line = CustomPaint(
       painter: _LineIndicatorPainter(
         hideDefaultIndicator: child != null,
-        lineColor: lineColor,
-//        indicatorColor: indicatorColor,
+        lineColor: theme.lineColor,
         indicatorSize: indicatorSize,
-//        indicatorStyle: indicatorStyle,
         isFirst: isFirst,
         isLast: isLast,
-        lineGap: lineGap,
-        strokeCap: strokeCap,
-        strokeWidth: strokeWidth,
-        style: style,
-        itemGap: itemGap,
+        lineGap: theme.lineGap,
+        strokeCap: theme.strokeCap,
+        strokeWidth: theme.strokeWidth,
+        style: theme.style,
+        itemGap: theme.itemGap,
       ),
 //      size: const Size(double.infinity, double.infinity),
       child: SizedBox(height: double.infinity, width: indicatorSize),

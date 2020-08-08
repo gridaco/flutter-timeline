@@ -20,13 +20,17 @@ class TimelineTheme extends InheritedTheme {
     return timelineThemeData.isConcrete
         ? timelineThemeData
         : timelineThemeData.copyWith(
-            color: timelineThemeData.color ??
-                const TimelineThemeData.fallback().color,
-//      opacity: timelineThemeData.opacity ?? const TimelineThemeData.fallback().opacity,
+            lineColor: timelineThemeData.lineColor ??
+                const TimelineThemeData.fallback().lineColor,
+            strokeWidth: timelineThemeData.strokeWidth ??
+                const TimelineThemeData.fallback().strokeWidth,
+            strokeCap: timelineThemeData.strokeCap ??
+                const TimelineThemeData.fallback().strokeCap,
           );
   }
 
-  static TimelineThemeData _getInheritedTimelineThemeData(BuildContext context) {
+  static TimelineThemeData _getInheritedTimelineThemeData(
+      BuildContext context) {
     final TimelineTheme timelineTheme =
         context.dependOnInheritedWidgetOfExactType<TimelineTheme>();
     return timelineTheme?.data ?? const TimelineThemeData.fallback();
