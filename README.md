@@ -8,12 +8,12 @@
 
 > a fully customizable & general timeline widget, based on real-world application references
 
-- ✅ fully customizable indicator dot
-- ✅ support spacing between indicator dot and lines
-- ✅ support spacing between event (items) but leaving the line connected
-- ✅ uses custom paint, but yet, indicator and body are fully customizable.
-- ✅ 2 real-world demos
-- ✅ L2R support
+- ✅  fully customizable indicator dot
+- ✅  support spacing between indicator dot and lines
+- ✅  support spacing between event (items) but leaving the line connected
+- ✅  uses custom paint, but yet, indicator and body are fully customizable.
+- ✅  2 real-world demos
+- ✅  L2R support
 
 
 ## Installation
