@@ -15,6 +15,7 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
   void initState() {
     super.initState();
     events = [
+      smallEventDisplay,
       plainEventDisplay,
       TimelineEventDisplay(
           child: Card(
@@ -39,6 +40,22 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  TimelineEventDisplay get smallEventDisplay {
+    return TimelineEventDisplay(
+        child: Card(
+          child: TimelineEventCard(
+            title: Text("click the + button"),
+            content: Text("to add a new event item"),
+          ),
+        ),
+        indicatorSize: 12,
+        indicator: Container(
+          width: 12,
+          height: 12,
+          decoration: BoxDecoration(color: Colors.blueAccent),
+        ));
   }
 
   TimelineEventDisplay get plainEventDisplay {

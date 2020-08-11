@@ -48,22 +48,14 @@ class Timeline extends StatelessWidget {
       primary: primary,
       itemBuilder: (context, index) {
         final event = events[index];
-
-        Widget indicator;
-
-        if (event.indicator != null) {
-          indicator = event.indicator;
-        }
-
         final isFirst = index == 0;
         final isLast = index == itemCount - 1;
-
         final timelineTile = <Widget>[
           if (event.hasIndicator)
             _buildIndicator(
                 isFirst: isFirst,
                 isLast: isLast,
-                child: indicator,
+                event: event,
                 theme: timelineTheme),
           if (event.hasIndicator) SizedBox(width: timelineTheme.gutterSpacing),
           Expanded(child: event.child),
@@ -81,13 +73,18 @@ class Timeline extends StatelessWidget {
   }
 
   Widget _buildIndicator(
-      {bool isFirst, bool isLast, Widget child, TimelineThemeData theme}) {
-    //    return
+      {bool isFirst,
+      bool isLast,
+      TimelineEventDisplay event,
+      TimelineThemeData theme}) {
+    var overrideIndicatorSize =
+        event.indicatorSize != null ? event.indicatorSize : indicatorSize;
     var line = CustomPaint(
       painter: _LineIndicatorPainter(
-        hideDefaultIndicator: child != null,
+        hideDefaultIndicator: event.child != null,
         lineColor: theme.lineColor,
-        indicatorSize: indicatorSize,
+        indicatorSize: overrideIndicatorSize,
+        maxIndicatorSize: indicatorSize,
         isFirst: isFirst,
         isLast: isLast,
         lineGap: theme.lineGap,
@@ -102,12 +99,10 @@ class Timeline extends StatelessWidget {
     return Stack(
       children: [
         line,
-        Align(
-          child: SizedBox(
-            width: indicatorSize,
-            height: indicatorSize,
-            child: child,
-          ),
+          SizedBox(
+            width: overrideIndicatorSize,
+            height: overrideIndicatorSize,
+            child: event.indicator,
         )
       ],
     );
@@ -118,6 +113,7 @@ class _LineIndicatorPainter extends CustomPainter {
   _LineIndicatorPainter({
     @required this.hideDefaultIndicator,
     @required this.indicatorSize,
+    @required this.maxIndicatorSize,
     @required this.lineGap,
     @required this.strokeCap,
     @required this.strokeWidth,
@@ -134,6 +130,7 @@ class _LineIndicatorPainter extends CustomPainter {
 
   final bool hideDefaultIndicator;
   final double indicatorSize;
+  final double maxIndicatorSize;
   final double lineGap;
   final StrokeCap strokeCap;
   final double strokeWidth;
@@ -146,18 +143,20 @@ class _LineIndicatorPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final indicatorRadius = indicatorSize / 2;
+    final indicatorRadius =indicatorSize / 2;
+    final maxIndicatorRadius = maxIndicatorSize / 2;
     final indicatorMargin = indicatorRadius + lineGap;
-    final safeItemGap = indicatorMargin + 0.0;
+    final safeItemGap = (indicatorSize / 2) + lineGap;
 
-    final top = size.topLeft(Offset(indicatorRadius, 0.0 - safeItemGap));
+    final top = size.topLeft(Offset(maxIndicatorRadius, 0.0 - safeItemGap));
     final centerTop = size.centerLeft(
-      Offset(indicatorRadius, -indicatorMargin),
+      Offset(maxIndicatorRadius, -indicatorMargin),
     );
 
-    final bottom = size.bottomLeft(Offset(indicatorRadius, 0.0 + safeItemGap));
+    final bottom =
+        size.bottomLeft(Offset(maxIndicatorRadius, 0.0 + safeItemGap));
     final centerBottom = size.centerLeft(
-      Offset(indicatorRadius, indicatorMargin),
+      Offset(maxIndicatorRadius, indicatorMargin),
     );
 
     if (!isFirst) canvas.drawLine(top, centerTop, linePaint);
