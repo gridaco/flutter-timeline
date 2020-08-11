@@ -63,3 +63,7 @@ https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
 ![demo app](./docs/images/mac-ss-3.png)
 
 more documentation available at [github](https://github.com/softmarshmallow/flutter-timeline)
+
+
+## Also check out...
+[flutter_layouts](https://github.com/softmarshmallow/flutter-layouts)
