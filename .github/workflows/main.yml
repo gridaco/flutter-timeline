@@ -14,9 +14,9 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'dev'
-      - run: cd example
       - run: flutter config --enable-web
       - run: flutter pub get
+      - run: cd example
       - run: flutter build web --release
       - run: |
           cd build/web
