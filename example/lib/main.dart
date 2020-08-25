@@ -1,4 +1,5 @@
 import 'package:example/screen/cms_comments_demo.dart';
+import 'package:example/screen/github_activity_demo.dart';
 import 'package:example/screen/plain_timeline_demo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timeline/flutter_timeline.dart';
@@ -19,7 +20,8 @@ class TimelineDemoApp extends StatelessWidget {
       ),
       routes: {
         PlainTimelineDemoScreen.routeName: (c) => PlainTimelineDemoScreen(),
-        CmsCommentsDemoScreen.routeName: (c) => CmsCommentsDemoScreen(),
+        DeskTimelineDemoScreen.routeName: (c) => DeskTimelineDemoScreen(),
+        GithubActivityDemo.routeName: (c) => GithubActivityDemo(),
       },
       home: DemoHomePage(title: 'Flutter Timeline Demo'),
     );
@@ -33,13 +35,18 @@ List<DemoScreen> demos = [
       cover: null,
       route: PlainTimelineDemoScreen.routeName),
   DemoScreen(
-      name: "cms / e-commerce with comments",
-      description: "demo for creating timeline such like shopify",
+      name: "github activity",
+      description: "github's activity timeline demo",
       cover: null,
-      route: CmsCommentsDemoScreen.routeName),
+      route: GithubActivityDemo.routeName),
   DemoScreen(
-      name: "plain timeline",
-      description: "simplest timeline demo",
+      name: "genoplan desk",
+      description: "genoplan's desk crm app timeline demo",
+      cover: null,
+      route: DeskTimelineDemoScreen.routeName),
+  DemoScreen(
+      name: "shopify",
+      description: "timeline demo from shopify admin",
       cover: null,
       route: PlainTimelineDemoScreen.routeName),
 ];

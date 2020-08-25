@@ -57,7 +57,7 @@ dependencies:
 https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
 
 
-## simple example
+## simple example [(run it now!)](https://softmarshmallow.github.io/flutter-timeline/)
 ![demo app](./docs/images/mac-ss.png)
 ![demo app](./docs/images/mac-ss-2.png)
 ![demo app](./docs/images/mac-ss-3.png)
