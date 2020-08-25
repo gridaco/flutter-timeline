@@ -20,7 +20,7 @@ jobs:
           cd example
           flutter build web --release
       - run: |
-          cd build/web
+          cd example/build/web
           git init
           git config --global user.email woojoo@softmarshmallow.com
           git config --global user.name softmarshmallow
