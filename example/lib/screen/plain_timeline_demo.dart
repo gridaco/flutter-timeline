@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_timeline/flutter_timeline.dart';
 import 'package:flutter_timeline/timeline_theme.dart';
@@ -58,13 +60,30 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
         ));
   }
 
+  Widget get randomIndicator {
+    var candidates = [
+      TimelineDots.of(context).circleIcon,
+      Container(
+        width: 16,
+        height: 16,
+        decoration: BoxDecoration(
+          color: Colors.blueAccent,
+          borderRadius: BorderRadius.all(Radius.circular(4)),
+        ),
+      ),
+    ];
+    final _random = new Random();
+    var element = candidates[_random.nextInt(candidates.length)];
+    return element;
+  }
+
   TimelineEventDisplay get plainEventDisplay {
     return TimelineEventDisplay(
         child: TimelineEventCard(
           title: Text("just now"),
           content: Text("someone commented on your timeline ${DateTime.now()}"),
         ),
-        indicator: TimelineDots.of(context).circleIcon);
+        indicator: randomIndicator);
   }
 
   List<TimelineEventDisplay> events;

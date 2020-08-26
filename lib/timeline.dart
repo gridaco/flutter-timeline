@@ -52,7 +52,7 @@ class Timeline extends StatelessWidget {
         final isLast = index == itemCount - 1;
         final timelineTile = <Widget>[
           if (event.hasIndicator)
-            _buildIndicator(
+            _buildIndicatorSection(
                 isFirst: isFirst,
                 isLast: isLast,
                 event: event,
@@ -72,7 +72,15 @@ class Timeline extends StatelessWidget {
     );
   }
 
-  Widget _buildIndicator(
+  Widget buildWrappedIndicator(Widget child, {double width, double height}) {
+    return SizedBox(
+      width: width,
+      height: height,
+      child: child,
+    );
+  }
+
+  Widget _buildIndicatorSection(
       {bool isFirst,
       bool isLast,
       TimelineEventDisplay event,
@@ -99,11 +107,16 @@ class Timeline extends StatelessWidget {
     return Stack(
       children: [
         line,
-          SizedBox(
-            width: overrideIndicatorSize,
-            height: overrideIndicatorSize,
-            child: event.indicator,
-        )
+        // align the indicator to the center
+        Positioned.fill(
+          child: Align(
+              alignment: Alignment.center,
+              child: buildWrappedIndicator(
+                event.indicator,
+                width: overrideIndicatorSize,
+                height: overrideIndicatorSize,
+              )),
+        ),
       ],
     );
   }
@@ -143,7 +156,7 @@ class _LineIndicatorPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final indicatorRadius =indicatorSize / 2;
+    final indicatorRadius = indicatorSize / 2;
     final maxIndicatorRadius = maxIndicatorSize / 2;
     final indicatorMargin = indicatorRadius + lineGap;
     final safeItemGap = (indicatorSize / 2) + lineGap;
