@@ -4,9 +4,13 @@ class TimelineEventDisplay {
   TimelineEventDisplay(
       {@required @required this.child,
       this.indicator,
+      this.indicatorSize,
       this.forceLineDrawing = false});
 
   final Widget child;
+
+  /// if not provided, use the default indicator size
+  final double indicatorSize;
   final Widget indicator;
 
   /// enables indicator line drawing even no indicator is passed.
@@ -14,6 +18,11 @@ class TimelineEventDisplay {
 
   bool get hasIndicator {
     return indicator != null;
+  }
+
+  @override
+  String toString() {
+    return "Instance of TimelineEventDisplay:: indicator size = $indicatorSize";
   }
 }
 

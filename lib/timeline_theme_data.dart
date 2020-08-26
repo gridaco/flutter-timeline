@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_timeline/indicator_position.dart';
 
-@immutable
+/// [TimelineThemeData] is passed through [TimelineTheme], works like general flutter theme object.
 class TimelineThemeData with Diagnosticable {
   TimelineThemeData({
     this.gutterSpacing = 12.0,
@@ -11,6 +12,7 @@ class TimelineThemeData with Diagnosticable {
     this.strokeCap = StrokeCap.butt,
     this.lineColor = Colors.lightBlueAccent,
     this.style = PaintingStyle.stroke,
+    this.indicatorPosition = IndicatorPosition.center,
   })  : assert(itemGap >= 0),
         assert(lineGap >= 0);
 
@@ -21,6 +23,9 @@ class TimelineThemeData with Diagnosticable {
   final PaintingStyle style;
   final double itemGap;
   final double gutterSpacing;
+
+  /// the position of the indicator. this affects the placing of the indicator, and following line measurement
+  final IndicatorPosition indicatorPosition;
 
   /// Whether all the properties of this object are non-null.
   bool get isConcrete => lineColor != null; // &&
@@ -35,11 +40,8 @@ class TimelineThemeData with Diagnosticable {
         strokeWidth = 4.0,
         style = PaintingStyle.stroke,
         itemGap = 24.0,
-        gutterSpacing = 12.0;
-
-//      : color = const Color(0xFF000000),
-//        _opacity = 1.0,
-//        size = 24.0;
+        gutterSpacing = 12.0,
+        indicatorPosition = IndicatorPosition.center;
 
   TimelineThemeData copyWith(
       {Color lineColor, StrokeCap strokeCap, double strokeWidth}) {

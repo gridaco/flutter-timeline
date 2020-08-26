@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_timeline/flutter_timeline.dart';
 import 'package:flutter_timeline/timeline.dart';
 
-class CmsCommentsDemoScreen extends StatefulWidget {
+class DeskTimelineDemoScreen extends StatefulWidget {
   static const routeName = "/demo/cms-comments";
 
   @override
-  State<StatefulWidget> createState() => _CmsCommentsDemoScreenState();
+  State<StatefulWidget> createState() => _DeskTimelineDemoScreenState();
 }
 
-class _CmsCommentsDemoScreenState extends State<CmsCommentsDemoScreen> {
+class _DeskTimelineDemoScreenState extends State<DeskTimelineDemoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
