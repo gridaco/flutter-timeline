@@ -1,7 +1,6 @@
 name: flutter_timeline
 description: a fully customizable & general timeline widget, based on real-world application references
-version: 0.0.4+4
-author: (softmarshmallow) woojoo@softmarshmallow.com
+version: 0.0.4+5
 homepage: https://github.com/softmarshmallow/flutter-timeline
 repository: https://github.com/softmarshmallow/flutter-timeline
 

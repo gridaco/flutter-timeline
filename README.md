@@ -4,7 +4,7 @@
 
 
 
-![logo](docs/images/logo.png)
+![logo](doc/images/logo.png)
 
 > a fully customizable & general timeline widget, based on real-world application references
 
@@ -58,9 +58,9 @@ https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
 
 
 ## simple example [(run it now!)](https://softmarshmallow.github.io/flutter-timeline/)
-![demo app](./docs/images/mac-ss.png)
-![demo app](./docs/images/mac-ss-2.png)
-![demo app](./docs/images/mac-ss-3.png)
+![demo app](doc/images/mac-ss.png)
+![demo app](doc/images/mac-ss-2.png)
+![demo app](doc/images/mac-ss-3.png)
 
 more documentation available at [github](https://github.com/softmarshmallow/flutter-timeline)
 
