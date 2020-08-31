@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_timeline/flutter_timeline.dart';
+import 'package:flutter_timeline/indicator_position.dart';
 import 'package:flutter_timeline/timeline_theme.dart';
 import 'package:flutter_timeline/timeline_theme_data.dart';
 
@@ -80,7 +81,7 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
   TimelineEventDisplay get plainEventDisplay {
     return TimelineEventDisplay(
         child: TimelineEventCard(
-          title: Text("just now"),
+          title: Text("just \n\n\n\n now"),
           content: Text("someone commented on your timeline ${DateTime.now()}"),
         ),
         indicator: randomIndicator);
@@ -92,6 +93,8 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
     return TimelineTheme(
         data: TimelineThemeData(lineColor: Colors.blueAccent),
         child: Timeline(
+          indicatorPosition: IndicatorPosition.top,
+          altOffset: Offset(0, -24),
           indicatorSize: 56,
           events: events,
         ));

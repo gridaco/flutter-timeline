@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
+import 'indicator_position.dart';
+
 class TimelineEventDisplay {
-  TimelineEventDisplay(
-      {@required @required this.child,
-      this.indicator,
-      this.indicatorSize,
-      this.forceLineDrawing = false});
+  TimelineEventDisplay({
+    @required @required this.child,
+    this.indicator,
+    this.indicatorSize,
+    this.forceLineDrawing = false,
+    this.indicatorPosition,
+  });
 
   final Widget child;
 
@@ -15,6 +19,9 @@ class TimelineEventDisplay {
 
   /// enables indicator line drawing even no indicator is passed.
   final bool forceLineDrawing;
+
+  /// [indicatorPosition] overrides the default IndicatorPosition
+  final IndicatorPosition indicatorPosition;
 
   bool get hasIndicator {
     return indicator != null;
