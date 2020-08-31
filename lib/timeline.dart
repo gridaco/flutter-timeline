@@ -17,8 +17,10 @@ class Timeline extends StatelessWidget {
     this.indicatorSize = 12.0,
     // item gap will be ignored when custom separatorBuilder is provided
     this.separatorBuilder,
+    this.altOffset = const Offset(0, 0),
   }) : itemCount = events.length;
 
+  final Offset altOffset;
   final List<TimelineEventDisplay> events;
   final double indicatorSize;
   final bool isLeftAligned;
@@ -73,9 +75,10 @@ class Timeline extends StatelessWidget {
   }
 
   Widget buildWrappedIndicator(Widget child, {double width, double height}) {
-    return SizedBox(
+    return Container(
       width: width,
       height: height,
+      transform: Matrix4.translationValues(altOffset.dx, altOffset.dy, 0.0),
       child: child,
     );
   }
@@ -100,14 +103,13 @@ class Timeline extends StatelessWidget {
         strokeWidth: theme.strokeWidth,
         style: theme.style,
         itemGap: theme.itemGap,
+        altOffset: altOffset,
       ),
-//      size: const Size(double.infinity, double.infinity),
       child: SizedBox(height: double.infinity, width: indicatorSize),
     );
     return Stack(
       children: [
         line,
-        // align the indicator to the center
         Positioned.fill(
           child: Align(
               alignment: Alignment.center,
@@ -126,6 +128,7 @@ class _LineIndicatorPainter extends CustomPainter {
   _LineIndicatorPainter({
     @required this.hideDefaultIndicator,
     @required this.indicatorSize,
+    @required this.altOffset,
     @required this.maxIndicatorSize,
     @required this.lineGap,
     @required this.strokeCap,
@@ -141,6 +144,7 @@ class _LineIndicatorPainter extends CustomPainter {
           ..strokeWidth = strokeWidth
           ..style = style;
 
+  final Offset altOffset;
   final bool hideDefaultIndicator;
   final double indicatorSize;
   final double maxIndicatorSize;
@@ -160,20 +164,29 @@ class _LineIndicatorPainter extends CustomPainter {
     final maxIndicatorRadius = maxIndicatorSize / 2;
     final indicatorMargin = indicatorRadius + lineGap;
     final safeItemGap = (indicatorSize / 2) + lineGap;
+    final altY = altOffset.dy;
 
-    final top = size.topLeft(Offset(maxIndicatorRadius, 0.0 - safeItemGap));
-    final centerTop = size.centerLeft(
-      Offset(maxIndicatorRadius, -indicatorMargin),
+    // todo
+    // calculate starting point
+    // calculate alt point
+    // use alt point as default point
+
+    final top =
+        size.topLeft(Offset(maxIndicatorRadius, 0.0 - safeItemGap + altY));
+    final topOfCenter = size.centerLeft(
+      Offset(maxIndicatorRadius, -indicatorMargin + altY),
     );
 
     final bottom =
-        size.bottomLeft(Offset(maxIndicatorRadius, 0.0 + safeItemGap));
-    final centerBottom = size.centerLeft(
-      Offset(maxIndicatorRadius, indicatorMargin),
+        size.bottomLeft(Offset(maxIndicatorRadius, 0.0 + safeItemGap + altY));
+    final bottomOfCenter = size.centerLeft(
+      Offset(maxIndicatorRadius, indicatorMargin + altY),
     );
 
-    if (!isFirst) canvas.drawLine(top, centerTop, linePaint);
-    if (!isLast) canvas.drawLine(centerBottom, bottom, linePaint);
+    // if not first, draw top-to-center  upper line
+    if (!isFirst) canvas.drawLine(top, topOfCenter, linePaint);
+    // if not last, draw center-to-bottom bottom line
+    if (!isLast) canvas.drawLine(bottomOfCenter, bottom, linePaint);
   }
 
   @override
