@@ -25,6 +25,8 @@ dependencies:
 
 
 ## usage
+
+*simple*
 ```dart
   TimelineEventDisplay get plainEventDisplay {
     return TimelineEventDisplay(
@@ -52,6 +54,18 @@ dependencies:
     });
   }
 ```
+
+*using offset*
+```dart
+Widget _buildTimeline() {
+  return Timeline(
+      indicatorSize: 56,
+      events: events,
+      altOffset: Offset(0, -24) // set offset
+  );
+}
+```
+
 
 ## references
 https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
