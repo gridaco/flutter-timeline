@@ -210,8 +210,9 @@ class _LineIndicatorPainter extends CustomPainter {
     final indicatorRadius = indicatorSize / 2;
     final maxIndicatorRadius = maxIndicatorSize / 2;
     final indicatorMargin = indicatorRadius + lineGap;
-    final safeItemGap = (indicatorSize / 2) + lineGap;
+    final safeItemGap = (indicatorRadius) + itemGap;
     double topStartY = 0.0;
+
     // region calculate starting point
 /*
     switch (indicatorPosition) {

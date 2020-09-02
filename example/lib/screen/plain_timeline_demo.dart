@@ -91,7 +91,7 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
 
   Widget _buildTimeline() {
     return TimelineTheme(
-        data: TimelineThemeData(lineColor: Colors.blueAccent),
+        data: TimelineThemeData(lineColor: Colors.blueAccent, itemGap: 180),
         child: Timeline(
           indicatorPosition: IndicatorPosition.top,
           altOffset: Offset(0, -24),
