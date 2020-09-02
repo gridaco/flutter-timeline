@@ -9,6 +9,7 @@ class TimelineEventDisplay {
     this.indicatorSize,
     this.forceLineDrawing = false,
     this.indicatorPosition,
+    this.indicatorOffset = const Offset(0, 0),
   });
 
   final Widget child;
@@ -22,6 +23,7 @@ class TimelineEventDisplay {
 
   /// [indicatorPosition] overrides the default IndicatorPosition
   final IndicatorPosition indicatorPosition;
+  final Offset indicatorOffset;
 
   bool get hasIndicator {
     return indicator != null;
