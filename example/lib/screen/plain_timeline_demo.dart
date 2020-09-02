@@ -80,8 +80,9 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
 
   TimelineEventDisplay get plainEventDisplay {
     return TimelineEventDisplay(
+//        indicatorPosition: IndicatorPosition.top,
         child: TimelineEventCard(
-          title: Text("just \n\n\n\n now"),
+          title: Text("multi\nline\ntitle\nawesome!"),
           content: Text("someone commented on your timeline ${DateTime.now()}"),
         ),
         indicator: randomIndicator);
@@ -91,10 +92,11 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
 
   Widget _buildTimeline() {
     return TimelineTheme(
-        data: TimelineThemeData(lineColor: Colors.blueAccent, itemGap: 180),
+        data: TimelineThemeData(
+            lineColor: Colors.blueAccent, itemGap: 100, lineGap: 0),
         child: Timeline(
-          indicatorPosition: IndicatorPosition.top,
-          altOffset: Offset(0, -24),
+          indicatorPosition: IndicatorPosition.center,
+//          altOffset: Offset(0, -24),
           indicatorSize: 56,
           events: events,
         ));
