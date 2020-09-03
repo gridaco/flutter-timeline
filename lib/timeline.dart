@@ -65,6 +65,7 @@ class Timeline extends StatelessWidget {
         if (index != events.length - 1) {
           nextEvent = events[index + 1];
         }
+        print(index);
         final isFirst = index == 0;
         final isLast = index == itemCount - 1;
         final timelineTile = <Widget>[
@@ -98,11 +99,13 @@ class Timeline extends StatelessWidget {
     return event.hasIndicator;
   }
 
-  Widget buildWrappedIndicator(Widget child, {double width, double height}) {
+  Widget buildWrappedIndicator(Widget child,
+      {double width, double height, Offset indicatorOffset}) {
+    final offset = altOffset + indicatorOffset;
     return Container(
       width: width,
       height: height,
-      transform: Matrix4.translationValues(altOffset.dx, altOffset.dy, 0.0),
+      transform: Matrix4.translationValues(offset.dx, offset.dy, 0.0),
       child: child,
     );
   }
@@ -114,11 +117,12 @@ class Timeline extends StatelessWidget {
       bool nextHasIndicator,
       TimelineEventDisplay event,
       TimelineThemeData theme}) {
-    var overrideIndicatorSize =
+    final overrideIndicatorSize =
         event.indicatorSize != null ? event.indicatorSize : indicatorSize;
-    var overrideIndicatorPosition = event.indicatorPosition != null
+    final overrideIndicatorPosition = event.indicatorPosition != null
         ? event.indicatorPosition
         : indicatorPosition;
+    final indicatorOffset = event.indicatorOffset;
 
     var line = CustomPaint(
       painter: _LineIndicatorPainter(
@@ -137,6 +141,7 @@ class Timeline extends StatelessWidget {
         prevHasIndicator: prevHasIndicator,
         nextHasIndicator: nextHasIndicator,
         indicatorPosition: overrideIndicatorPosition,
+        indicatorOffset: indicatorOffset,
       ),
       child: SizedBox(height: double.infinity, width: indicatorSize),
     );
@@ -148,6 +153,7 @@ class Timeline extends StatelessWidget {
               alignment: overrideIndicatorPosition.asAlignment,
               child: buildWrappedIndicator(
                 event.indicator,
+                indicatorOffset: indicatorOffset,
                 width: overrideIndicatorSize,
                 height: overrideIndicatorSize,
               )),
@@ -173,6 +179,7 @@ class _LineIndicatorPainter extends CustomPainter {
       @required this.nextHasIndicator,
       @required this.prevHasIndicator,
       @required this.itemGap,
+      @required this.indicatorOffset,
       @required this.indicatorPosition})
       : linePaint = Paint()
           ..color = lineColor
@@ -183,6 +190,7 @@ class _LineIndicatorPainter extends CustomPainter {
   final Offset altOffset;
   final bool hideDefaultIndicator;
   final double indicatorSize;
+  final Offset indicatorOffset;
   final double maxIndicatorSize;
   final double lineGap;
   final StrokeCap strokeCap;
@@ -198,11 +206,11 @@ class _LineIndicatorPainter extends CustomPainter {
   final IndicatorPosition indicatorPosition;
 
   double get altX {
-    return altOffset.dx;
+    return altOffset.dx + indicatorOffset.dx;
   }
 
   double get altY {
-    return altOffset.dy;
+    return altOffset.dy + indicatorOffset.dy;
   }
 
   @override
@@ -216,6 +224,136 @@ class _LineIndicatorPainter extends CustomPainter {
     final safeHalfHeight = halfHeight - radius;
     final double halfItemGap = itemGap / 2;
     double topStartY = 0.0;
+
+    var testLinePaint = Paint()
+      ..color = Colors.red
+      ..strokeCap = strokeCap
+      ..strokeWidth = strokeWidth
+      ..style = style;
+
+    // initial start point
+    // works well
+    Offset indicatorCenterStartPoint;
+    switch (indicatorPosition) {
+      case IndicatorPosition.top:
+        indicatorCenterStartPoint = size.topCenter(Offset(0, radius));
+        break;
+      case IndicatorPosition.center:
+        indicatorCenterStartPoint = size.center(Offset.zero);
+        break;
+      case IndicatorPosition.bottom:
+        indicatorCenterStartPoint = size.bottomCenter(Offset(0, -radius));
+        break;
+    }
+
+    print("indicatorCenterStartPoint : $indicatorCenterStartPoint");
+
+    // alt start point
+    Offset indicatorCenter = indicatorCenterStartPoint.translate(altX, altY);
+    print("indicatorCenter : $indicatorCenter");
+
+    // region upper line
+    if (!isFirst) {
+      double additionalGap = 0;
+      if (!prevHasIndicator) additionalGap = halfItemGap;
+      final additionalTop = getAdditionalY(height);
+
+      // works well
+      Offset topStart = indicatorCenter.translate(
+          0,
+          // the altY + radius is the default start point.
+          // adding half item gap is also by default.
+          // the below two items does not get affected by the indicator position
+          -(((altY + radius) + halfItemGap) //
+              +
+              (additionalGap) +
+              (additionalTop) //
+          ));
+
+      // works well
+      Offset topEnd = indicatorCenter.translate(0, -radius);
+
+      // draw upper line
+      if (!isFirst) canvas.drawLine(topStart, topEnd, linePaint);
+    }
+    // endregion upper line
+
+    // endregion downer line
+    if (!isLast) {
+      double additionalGap = 0;
+      if (!nextHasIndicator) additionalGap = halfItemGap;
+
+      final additionalBottom = getAdditionalY(height);
+
+      // works well
+      Offset bottomEnd = indicatorCenter.translate(
+          0,
+          // the altY + radius is the default start point.
+          // adding half item gap is also by default.
+          // the below two items does not get affected by the indicator position
+          (((-altY + radius) + halfItemGap) //
+              +
+              (additionalGap) +
+              (additionalBottom) //
+          ));
+
+      // works well
+      Offset bottomStart = indicatorCenter.translate(0, -radius);
+//      if (!isLast) canvas.drawLine(bottomStart, bottomEnd, testLinePaint);
+
+//
+//      Offset bottomStart = indicatorCenter.translate(
+//          0, (safeHalfHeight + halfItemGap + indicatorMargin - lineGap));
+//      // works well
+//      Offset bottomEnd = indicatorCenter.translate(0, radius);
+
+    }
+    // endregion downer line
+  }
+
+  double getAdditionalY(double height, {int direction = 1}) {
+    double add = 0;
+    // the additional size should be
+    switch (indicatorPosition) {
+      case IndicatorPosition.top:
+        add = 0;
+        break;
+      case IndicatorPosition.center:
+        add = (height - indicatorSize) / 2;
+        break;
+      case IndicatorPosition.bottom:
+        add = height - indicatorSize;
+        break;
+    }
+    return add * direction;
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+//    switch (indicatorPosition) {
+//      case IndicatorPosition.top:
+//        topStart = indicatorCenter.translate(
+//            0,
+//            -(safeHalfHeight + halfItemGap + indicatorMargin - lineGap) +
+//                additionalTopY);
+//        break;
+//      case IndicatorPosition.center:
+//        topStart = indicatorCenter - Offset(0, lineGap);
+//        break;
+//      case IndicatorPosition.bottom:
+//        topStart = indicatorCenter.translate(
+//            0,
+//            -(safeHalfHeight + halfItemGap + indicatorMargin - lineGap) +
+//                additionalTopY);
+//        break;
+//    }
+
+// painter v1
+/*
 
     // region override top, bottom calculator for filling empty space between events
     double overrideOffsetYForTop = altY;
@@ -261,91 +399,7 @@ class _LineIndicatorPainter extends CustomPainter {
     // endregion
 
     // if not first, draw top-to-center  upper line
-    if (!isFirst) canvas.drawLine(outboundTop, topOfCenter, linePaint);
+//    if (!isFirst) canvas.drawLine(outboundTop, topOfCenter, linePaint);
     // if not last, draw center-to-bottom bottom line
-    if (!isLast) canvas.drawLine(bottomOfCenter, outboundBottom, linePaint);
-  }
-
-  Offset upperTopStart(
-      {@required IndicatorPosition indicatorPosition,
-      Offset alt = const Offset(0, 0),
-      bool hasPrev = true}) {}
-
-  Offset upperBottomEnd(
-      {@required IndicatorPosition indicatorPosition,
-      Offset alt = const Offset(0, 0),
-      bool hasPrev = true}) {}
-
-  drawDownerLine(
-      {@required IndicatorPosition indicatorPosition,
-      Offset alt = const Offset(0, 0),
-      bool hasNext = true}) {}
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-
-
-// painter v2
-/*
-
-    var testLinePaint = Paint()
-      ..color = Colors.red
-      ..strokeCap = strokeCap
-      ..strokeWidth = strokeWidth
-      ..style = style;
-
-    // initial start point
-    Offset startPoint;
-    switch (indicatorPosition) {
-      case IndicatorPosition.top:
-        startPoint = size.topCenter(Offset(0, radius));
-        break;
-      case IndicatorPosition.center:
-        startPoint = size.center(Offset.zero);
-        break;
-      case IndicatorPosition.bottom:
-        startPoint = size.bottomCenter(Offset(0, -radius));
-        break;
-    }
-
-    // alt start point
-    double additionalTopY = 0;
-    if (!prevHasIndicator) additionalTopY = -itemGap;
-    Offset altStartPoint = startPoint.translate(altX, altY);
-
-    Offset topStart;
-    switch (indicatorPosition) {
-      case IndicatorPosition.top:
-        topStart = altStartPoint.translate(
-            0,
-            -(safeHalfHeight + halfItemGap + indicatorMargin - lineGap) +
-                additionalTopY);
-        break;
-      case IndicatorPosition.center:
-        topStart = altStartPoint - Offset(0, lineGap);
-        break;
-      case IndicatorPosition.bottom:
-        topStart = altStartPoint.translate(
-            0,
-            -(safeHalfHeight + halfItemGap + indicatorMargin - lineGap) +
-                additionalTopY);
-        break;
-    }
-
-    Offset topEnd = altStartPoint.translate(0, -indicatorMargin);
-
-    // draw upper line
-    if (!isFirst) canvas.drawLine(topStart, topEnd, linePaint);
-
-    Offset bottomStart = altStartPoint.translate(
-        0, (safeHalfHeight + halfItemGap + indicatorMargin - lineGap));
-    Offset bottomEnd = altStartPoint.translate(0, indicatorMargin);
-
-//    if (!isLast) canvas.drawLine(bottomStart, bottomEnd, testLinePaint);
-
- */
-
+    if (!isLast) canvas.drawLine(bottomOfCenter, outboundBottom, testLinePaint);
+* */
