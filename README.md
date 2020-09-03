@@ -59,6 +59,7 @@ dependencies:
 ```
 
 *using offset*
+
 ```dart
 Widget _buildTimeline() {
   return Timeline(
@@ -70,14 +71,40 @@ Widget _buildTimeline() {
 ```
 
 
+
+
+
+*using anchor & offset*
+
+```dart
+  TimelineEventDisplay get plainEventDisplay {
+    return TimelineEventDisplay(
+        anchor: IndicatorPosition.top,
+        indicatorOffset: Offset(0, 24),
+        child: TimelineEventCard(
+          title: Text("multi\nline\ntitle\nawesome!"),
+          content: Text("someone commented on your timeline ${DateTime.now()}"),
+        ),
+        indicator: randomIndicator);
+  }
+```
+
+
+
 ## references
 https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
 
 
+## complex example
+
+<img src="./doc/images/desk-ss-01.png" width="400"/>
+
+
+
 ## simple example [(run it now!)](https://softmarshmallow.github.io/flutter-timeline/)
-![demo app](doc/images/mac-ss.png)
-![demo app](doc/images/mac-ss-2.png)
-![demo app](doc/images/mac-ss-3.png)
+<img src="./doc/images/mac-ss.png" width="500"/>
+<img src="./doc/images/mac-ss-2.png" width="500"/>
+<img src="./doc/images/mac-ss-3.png" width="500"/>
 
 more documentation available at [github](https://github.com/softmarshmallow/flutter-timeline)
 
