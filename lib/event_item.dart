@@ -8,7 +8,7 @@ class TimelineEventDisplay {
     this.indicator,
     this.indicatorSize,
     this.forceLineDrawing = false,
-    this.indicatorPosition,
+    this.anchor,
     this.indicatorOffset = const Offset(0, 0),
   });
 
@@ -21,8 +21,8 @@ class TimelineEventDisplay {
   /// enables indicator line drawing even no indicator is passed.
   final bool forceLineDrawing;
 
-  /// [indicatorPosition] overrides the default IndicatorPosition
-  final IndicatorPosition indicatorPosition;
+  /// [anchor] overrides the default IndicatorPosition
+  final IndicatorPosition anchor;
   final Offset indicatorOffset;
 
   bool get hasIndicator {

@@ -20,7 +20,7 @@ class Timeline extends StatelessWidget {
       // item gap will be ignored when custom separatorBuilder is provided
       this.separatorBuilder,
       this.altOffset = const Offset(0, 0),
-      this.indicatorPosition = IndicatorPosition.center})
+      this.anchor = IndicatorPosition.center})
       : itemCount = events.length;
 
   final Offset altOffset;
@@ -35,8 +35,8 @@ class Timeline extends StatelessWidget {
   final bool primary;
   final bool reverse;
 
-  /// [indicatorPosition] describes where the indicator drawing should start. use it with alt offset
-  final IndicatorPosition indicatorPosition;
+  /// [anchor] describes where the indicator drawing should start. use it with alt offset
+  final IndicatorPosition anchor;
 
   final IndexedWidgetBuilder separatorBuilder;
 
@@ -65,7 +65,6 @@ class Timeline extends StatelessWidget {
         if (index != events.length - 1) {
           nextEvent = events[index + 1];
         }
-        print(index);
         final isFirst = index == 0;
         final isLast = index == itemCount - 1;
         final timelineTile = <Widget>[
@@ -119,9 +118,8 @@ class Timeline extends StatelessWidget {
       TimelineThemeData theme}) {
     final overrideIndicatorSize =
         event.indicatorSize != null ? event.indicatorSize : indicatorSize;
-    final overrideIndicatorPosition = event.indicatorPosition != null
-        ? event.indicatorPosition
-        : indicatorPosition;
+    final overrideIndicatorPosition =
+        event.anchor != null ? event.anchor : anchor;
     final indicatorOffset = event.indicatorOffset;
 
     var line = CustomPaint(
@@ -217,19 +215,9 @@ class _LineIndicatorPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // indicator's radius
     final radius = indicatorSize / 2;
-    final indicatorMargin = radius + lineGap;
-    final safeItemGap = radius + itemGap;
     final height = size.height;
     final halfHeight = height / 2;
-    final safeHalfHeight = halfHeight - radius;
     final double halfItemGap = itemGap / 2;
-    double topStartY = 0.0;
-
-    var testLinePaint = Paint()
-      ..color = Colors.red
-      ..strokeCap = strokeCap
-      ..strokeWidth = strokeWidth
-      ..style = style;
 
     // initial start point
     // works well
@@ -246,17 +234,14 @@ class _LineIndicatorPainter extends CustomPainter {
         break;
     }
 
-    print("indicatorCenterStartPoint : $indicatorCenterStartPoint");
-
     // alt start point
     Offset indicatorCenter = indicatorCenterStartPoint.translate(altX, altY);
-    print("indicatorCenter : $indicatorCenter");
 
     // region upper line
     if (!isFirst) {
       double additionalGap = 0;
       if (!prevHasIndicator) additionalGap = halfItemGap;
-      final additionalTop = getAdditionalY(height);
+      final additionalTop = getAdditionalY(height, mode: "upper");
 
       // works well
       Offset topStart = indicatorCenter.translate(
@@ -271,7 +256,7 @@ class _LineIndicatorPainter extends CustomPainter {
           ));
 
       // works well
-      Offset topEnd = indicatorCenter.translate(0, -radius);
+      Offset topEnd = indicatorCenter.translate(0, -radius - lineGap);
 
       // draw upper line
       if (!isFirst) canvas.drawLine(topStart, topEnd, linePaint);
@@ -283,49 +268,58 @@ class _LineIndicatorPainter extends CustomPainter {
       double additionalGap = 0;
       if (!nextHasIndicator) additionalGap = halfItemGap;
 
-      final additionalBottom = getAdditionalY(height);
+      final additionalBottom = getAdditionalY(height, mode: "downer");
 
       // works well
       Offset bottomEnd = indicatorCenter.translate(
           0,
-          // the altY + radius is the default start point.
-          // adding half item gap is also by default.
-          // the below two items does not get affected by the indicator position
-          (((-altY + radius) + halfItemGap) //
+          (radius + halfItemGap - altY) +
+              (additionalGap) //
               +
-              (additionalGap) +
               (additionalBottom) //
-          ));
+          );
 
       // works well
-      Offset bottomStart = indicatorCenter.translate(0, -radius);
-//      if (!isLast) canvas.drawLine(bottomStart, bottomEnd, testLinePaint);
-
-//
-//      Offset bottomStart = indicatorCenter.translate(
-//          0, (safeHalfHeight + halfItemGap + indicatorMargin - lineGap));
-//      // works well
-//      Offset bottomEnd = indicatorCenter.translate(0, radius);
-
+      Offset bottomStart = indicatorCenter.translate(0, radius + lineGap);
+      if (!isLast) canvas.drawLine(bottomStart, bottomEnd, linePaint);
     }
     // endregion downer line
   }
 
-  double getAdditionalY(double height, {int direction = 1}) {
+  double getAdditionalY(double height, {@required String mode}) {
     double add = 0;
     // the additional size should be
-    switch (indicatorPosition) {
-      case IndicatorPosition.top:
-        add = 0;
-        break;
-      case IndicatorPosition.center:
-        add = (height - indicatorSize) / 2;
-        break;
-      case IndicatorPosition.bottom:
-        add = height - indicatorSize;
-        break;
+    if (mode == "upper") {
+      switch (indicatorPosition) {
+        case IndicatorPosition.top:
+          add = 0;
+          break;
+        case IndicatorPosition.center:
+          add = (height - indicatorSize) / 2;
+          break;
+        case IndicatorPosition.bottom:
+          add = height - indicatorSize;
+          break;
+      }
+      return add;
     }
-    return add * direction;
+
+    if (mode == "downer") {
+      switch (indicatorPosition) {
+        case IndicatorPosition.top:
+          add = height - indicatorSize;
+          break;
+        case IndicatorPosition.center:
+          add = (height - indicatorSize) / 2;
+          break;
+        case IndicatorPosition.bottom:
+          add = 0;
+          break;
+      }
+      return add;
+    }
+
+    throw FlutterError("$mode is not a supported mode");
   }
 
   @override
@@ -333,24 +327,6 @@ class _LineIndicatorPainter extends CustomPainter {
     return true;
   }
 }
-
-//    switch (indicatorPosition) {
-//      case IndicatorPosition.top:
-//        topStart = indicatorCenter.translate(
-//            0,
-//            -(safeHalfHeight + halfItemGap + indicatorMargin - lineGap) +
-//                additionalTopY);
-//        break;
-//      case IndicatorPosition.center:
-//        topStart = indicatorCenter - Offset(0, lineGap);
-//        break;
-//      case IndicatorPosition.bottom:
-//        topStart = indicatorCenter.translate(
-//            0,
-//            -(safeHalfHeight + halfItemGap + indicatorMargin - lineGap) +
-//                additionalTopY);
-//        break;
-//    }
 
 // painter v1
 /*

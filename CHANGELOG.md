@@ -10,3 +10,4 @@ Timeline(
     // ...
 );
 ```
+## [0.1.1+12] - supports anchor & offset for timeline & indicator

@@ -80,7 +80,7 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
 
   TimelineEventDisplay get plainEventDisplay {
     return TimelineEventDisplay(
-        indicatorPosition: IndicatorPosition.top,
+        anchor: IndicatorPosition.top,
         indicatorOffset: Offset(0, 24),
         child: TimelineEventCard(
           title: Text("multi\nline\ntitle\nawesome!"),
@@ -96,8 +96,9 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
         data: TimelineThemeData(
             lineColor: Colors.blueAccent, itemGap: 100, lineGap: 0),
         child: Timeline(
-          indicatorPosition: IndicatorPosition.center,
+          anchor: IndicatorPosition.center,
           indicatorSize: 56,
+          altOffset: Offset(10, 40),
           events: events,
         ));
   }
