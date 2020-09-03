@@ -97,7 +97,7 @@ https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
 
 ## complex example
 
-<img src="./doc/images/desk-ss-01.png" width="400"/>
+<img src="./doc/images/desk-ss-01.png" width="300"/>
 
 
 
