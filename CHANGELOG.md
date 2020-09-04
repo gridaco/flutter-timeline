@@ -11,3 +11,4 @@ Timeline(
 );
 ```
 ## [0.1.1+12] - supports anchor & offset for timeline & indicator
+## [0.1.1+13] - supports `reverse:true`

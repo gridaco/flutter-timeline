@@ -43,6 +43,13 @@ class Timeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TimelineThemeData timelineTheme = TimelineTheme.of(context);
+    // timeline is not supported by listview.reverse.
+    // region make data reversed
+    var _events = events;
+    if (reverse) {
+      _events = events.reversed.toList();
+    }
+    // endregion make data reversed
 
     return ListView.separated(
       padding: padding,
@@ -52,18 +59,17 @@ class Timeline extends StatelessWidget {
       shrinkWrap: shrinkWrap,
       itemCount: itemCount,
       controller: controller,
-      reverse: reverse,
       primary: primary,
       itemBuilder: (context, index) {
-        final event = events[index];
+        final event = _events[index];
         // safely get prev, next events
         TimelineEventDisplay prevEvent;
         TimelineEventDisplay nextEvent;
         if (index != 0) {
-          prevEvent = events[index - 1];
+          prevEvent = _events[index - 1];
         }
         if (index != events.length - 1) {
-          nextEvent = events[index + 1];
+          nextEvent = _events[index + 1];
         }
         final isFirst = index == 0;
         final isLast = index == itemCount - 1;
@@ -126,6 +132,7 @@ class Timeline extends StatelessWidget {
       painter: _LineIndicatorPainter(
         hideDefaultIndicator: event.child != null,
         lineColor: theme.lineColor,
+        reverse: reverse,
         indicatorSize: overrideIndicatorSize,
         maxIndicatorSize: indicatorSize,
         isFirst: isFirst,
@@ -164,6 +171,7 @@ class Timeline extends StatelessWidget {
 class _LineIndicatorPainter extends CustomPainter {
   _LineIndicatorPainter(
       {@required this.hideDefaultIndicator,
+      @required this.reverse,
       @required this.indicatorSize,
       @required this.altOffset,
       @required this.maxIndicatorSize,
@@ -187,6 +195,7 @@ class _LineIndicatorPainter extends CustomPainter {
 
   final Offset altOffset;
   final bool hideDefaultIndicator;
+  final bool reverse;
   final double indicatorSize;
   final Offset indicatorOffset;
   final double maxIndicatorSize;
@@ -249,11 +258,7 @@ class _LineIndicatorPainter extends CustomPainter {
           // the altY + radius is the default start point.
           // adding half item gap is also by default.
           // the below two items does not get affected by the indicator position
-          -(((altY + radius) + halfItemGap) //
-              +
-              (additionalGap) +
-              (additionalTop) //
-          ));
+          -(((halfItemGap + radius) + altY) + (additionalGap + additionalTop)));
 
       // works well
       Offset topEnd = indicatorCenter.translate(0, -radius - lineGap);
@@ -271,13 +276,8 @@ class _LineIndicatorPainter extends CustomPainter {
       final additionalBottom = getAdditionalY(height, mode: "downer");
 
       // works well
-      Offset bottomEnd = indicatorCenter.translate(
-          0,
-          (radius + halfItemGap - altY) +
-              (additionalGap) //
-              +
-              (additionalBottom) //
-          );
+      Offset bottomEnd = indicatorCenter.translate(0,
+          ((radius + halfItemGap) - altY) + (additionalGap + additionalBottom));
 
       // works well
       Offset bottomStart = indicatorCenter.translate(0, radius + lineGap);
@@ -327,55 +327,3 @@ class _LineIndicatorPainter extends CustomPainter {
     return true;
   }
 }
-
-// painter v1
-/*
-
-    // region override top, bottom calculator for filling empty space between events
-    double overrideOffsetYForTop = altY;
-    double overrideOffsetYForBottom = altY;
-
-    if (!prevHasIndicator) {
-      overrideOffsetYForTop = 0.0;
-    }
-    if (!nextHasIndicator) {
-      overrideOffsetYForBottom = 0.0;
-    }
-    // endregion
-
-    final inboundTop = size.topCenter(Offset.zero);
-    final outboundTop = inboundTop.translate(
-        altX, topStartY - safeItemGap + overrideOffsetYForTop);
-//    final outboundTop = size.topLeft(Offset(maxIndicatorRadius + altX,
-//        topStartY - safeItemGap + overrideOffsetYForTop));
-
-    // region center
-    // FIXME
-    final center = size.center(Offset.zero);
-    final topOfCenter = center.translate(altX, -indicatorMargin + altY);
-    final bottomOfCenter = center.translate(altX, indicatorMargin + altY);
-    // endregion
-    final inboundBottom = size.bottomCenter(Offset.zero);
-    final outboundBottom =
-        inboundBottom.translate(altX, safeItemGap + overrideOffsetYForBottom);
-
-    // region calculate starting point
-/*
-    switch (indicatorPosition) {
-      case IndicatorPosition.top:
-        topStartY = -size.height / 2;
-        break;
-      case IndicatorPosition.center:
-        topStartY = 0;
-        break;
-      case IndicatorPosition.bottom:
-        //        startY = size.height / 2;
-        break;
-    }*/
-    // endregion
-
-    // if not first, draw top-to-center  upper line
-//    if (!isFirst) canvas.drawLine(outboundTop, topOfCenter, linePaint);
-    // if not last, draw center-to-bottom bottom line
-    if (!isLast) canvas.drawLine(bottomOfCenter, outboundBottom, testLinePaint);
-* */
