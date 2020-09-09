@@ -1,6 +1,16 @@
+---
+framework: flutter
+platform: Android, iOS, Web, macOS, Linux, Windows
+tags: flutter, timeline, flutter timeline, timeline tile
+title: flutter timeline
+---
+
+
+  <meta name="description" content="a fully customizable, ready to use flutter timeline widget">
+  <meta name="title" content="flutter timeline widget">
+  
+
 # flutter_timeline [![](https://img.shields.io/badge/pub-latest-brightgreen)](https://pub.dev/packages/flutter_timeline)
-
-
 
 
 
@@ -111,3 +121,4 @@ more documentation available at [github](https://github.com/softmarshmallow/flut
 
 ## Also check out...
 [flutter_layouts](https://github.com/softmarshmallow/flutter-layouts)
+
