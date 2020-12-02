@@ -38,8 +38,13 @@ class TimelineEventDisplay {
 class TimelineEventCard extends StatelessWidget {
   final Widget title;
   final Widget content;
+  final EdgeInsetsGeometry padding;
 
-  TimelineEventCard({@required this.title, @required this.content});
+  TimelineEventCard({
+    @required this.title,
+    @required this.content,
+    this.padding = const EdgeInsets.only(left: 16, top: 12, right: 16, bottom: 20),
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +57,7 @@ class TimelineEventCard extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Container(
-        padding: EdgeInsets.only(left: 16, top: 12, right: 16, bottom: 20),
+        padding: padding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
