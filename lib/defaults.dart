@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TimelineDots {
-  TimelineDots({this.context});
+  TimelineDots({required this.context});
 
   BuildContext context;
 

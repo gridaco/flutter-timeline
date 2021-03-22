@@ -8,7 +8,7 @@ import 'indicator_position.dart';
 
 class Timeline extends StatelessWidget {
   const Timeline(
-      {@required this.events,
+      {required this.events,
       this.isLeftAligned = true,
       this.padding = const EdgeInsets.all(8),
       this.controller,
@@ -28,9 +28,9 @@ class Timeline extends StatelessWidget {
   final double indicatorSize;
   final bool isLeftAligned;
   final EdgeInsets padding;
-  final ScrollController controller;
+  final ScrollController? controller;
   final int itemCount;
-  final ScrollPhysics physics;
+  final ScrollPhysics? physics;
   final bool shrinkWrap;
   final bool primary;
   final bool reverse;
@@ -38,7 +38,7 @@ class Timeline extends StatelessWidget {
   /// [anchor] describes where the indicator drawing should start. use it with alt offset
   final IndicatorPosition anchor;
 
-  final IndexedWidgetBuilder separatorBuilder;
+  final IndexedWidgetBuilder? separatorBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +63,8 @@ class Timeline extends StatelessWidget {
       itemBuilder: (context, index) {
         final event = _events[index];
         // safely get prev, next events
-        TimelineEventDisplay prevEvent;
-        TimelineEventDisplay nextEvent;
+        TimelineEventDisplay? prevEvent;
+        TimelineEventDisplay? nextEvent;
         if (index != 0) {
           prevEvent = _events[index - 1];
         }
@@ -97,15 +97,15 @@ class Timeline extends StatelessWidget {
     );
   }
 
-  bool _eventHasIndicator(TimelineEventDisplay event) {
+  bool _eventHasIndicator(TimelineEventDisplay? event) {
     if (event == null) {
       return false;
     }
     return event.hasIndicator;
   }
 
-  Widget buildWrappedIndicator(Widget child,
-      {double width, double height, Offset indicatorOffset}) {
+  Widget buildWrappedIndicator(Widget? child,
+      {double? width, double? height, required Offset indicatorOffset}) {
     final offset = altOffset + indicatorOffset;
     return Container(
       width: width,
@@ -116,21 +116,21 @@ class Timeline extends StatelessWidget {
   }
 
   Widget _buildIndicatorSection(
-      {bool isFirst,
-      bool isLast,
-      bool prevHasIndicator,
-      bool nextHasIndicator,
-      TimelineEventDisplay event,
-      TimelineThemeData theme}) {
+      {required bool isFirst,
+      required bool isLast,
+      required bool prevHasIndicator,
+      required bool nextHasIndicator,
+      required TimelineEventDisplay event,
+      required TimelineThemeData theme}) {
     final overrideIndicatorSize =
-        event.indicatorSize != null ? event.indicatorSize : indicatorSize;
+        event.indicatorSize != null ? event.indicatorSize! : indicatorSize;
     final overrideIndicatorPosition =
-        event.anchor != null ? event.anchor : anchor;
+        event.anchor != null ? event.anchor! : anchor;
     final indicatorOffset = event.indicatorOffset;
 
     var line = CustomPaint(
       painter: _LineIndicatorPainter(
-        hideDefaultIndicator: event.child != null,
+        hideDefaultIndicator: true,
         lineColor: theme.lineColor,
         reverse: reverse,
         indicatorSize: overrideIndicatorSize,
@@ -170,23 +170,23 @@ class Timeline extends StatelessWidget {
 
 class _LineIndicatorPainter extends CustomPainter {
   _LineIndicatorPainter(
-      {@required this.hideDefaultIndicator,
-      @required this.reverse,
-      @required this.indicatorSize,
-      @required this.altOffset,
-      @required this.maxIndicatorSize,
-      @required this.lineGap,
-      @required this.strokeCap,
-      @required this.strokeWidth,
-      @required this.style,
-      @required this.lineColor,
-      @required this.isFirst,
-      @required this.isLast,
-      @required this.nextHasIndicator,
-      @required this.prevHasIndicator,
-      @required this.itemGap,
-      @required this.indicatorOffset,
-      @required this.indicatorPosition})
+      {required this.hideDefaultIndicator,
+      required this.reverse,
+      required this.indicatorSize,
+      required this.altOffset,
+      required this.maxIndicatorSize,
+      required this.lineGap,
+      required this.strokeCap,
+      required this.strokeWidth,
+      required this.style,
+      required this.lineColor,
+      required this.isFirst,
+      required this.isLast,
+      required this.nextHasIndicator,
+      required this.prevHasIndicator,
+      required this.itemGap,
+      required this.indicatorOffset,
+      required this.indicatorPosition})
       : linePaint = Paint()
           ..color = lineColor
           ..strokeCap = strokeCap
@@ -225,7 +225,6 @@ class _LineIndicatorPainter extends CustomPainter {
     // indicator's radius
     final radius = indicatorSize / 2;
     final height = size.height;
-    final halfHeight = height / 2;
     final double halfItemGap = itemGap / 2;
 
     // initial start point
@@ -286,7 +285,7 @@ class _LineIndicatorPainter extends CustomPainter {
     // endregion downer line
   }
 
-  double getAdditionalY(double height, {@required String mode}) {
+  double getAdditionalY(double height, {required String mode}) {
     double add = 0;
     // the additional size should be
     if (mode == "upper") {

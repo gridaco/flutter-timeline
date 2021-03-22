@@ -9,29 +9,18 @@ class TimelineTheme extends InheritedTheme {
 
   /// Creates an timeline theme that controls the styles of descendant widgets.
   /// Both [data] and [child] arguments must not be null.
-  const TimelineTheme({Key key, @required this.data, @required this.child})
-      : assert(data != null),
-        assert(child != null),
-        super(key: key, child: child);
+  const TimelineTheme({Key? key, required this.data, required this.child})
+      : super(key: key, child: child);
 
   static TimelineThemeData of(BuildContext context) {
     final TimelineThemeData timelineThemeData =
         _getInheritedTimelineThemeData(context).resolve(context);
-    return timelineThemeData.isConcrete
-        ? timelineThemeData
-        : timelineThemeData.copyWith(
-            lineColor: timelineThemeData.lineColor ??
-                const TimelineThemeData.fallback().lineColor,
-            strokeWidth: timelineThemeData.strokeWidth ??
-                const TimelineThemeData.fallback().strokeWidth,
-            strokeCap: timelineThemeData.strokeCap ??
-                const TimelineThemeData.fallback().strokeCap,
-          );
+    return timelineThemeData;
   }
 
   static TimelineThemeData _getInheritedTimelineThemeData(
       BuildContext context) {
-    final TimelineTheme timelineTheme =
+    final TimelineTheme? timelineTheme =
         context.dependOnInheritedWidgetOfExactType<TimelineTheme>();
     return timelineTheme?.data ?? const TimelineThemeData.fallback();
   }
@@ -41,7 +30,7 @@ class TimelineTheme extends InheritedTheme {
 
   @override
   Widget wrap(BuildContext context, Widget child) {
-    final TimelineTheme timelineTheme =
+    final TimelineTheme? timelineTheme =
         context.findAncestorWidgetOfExactType<TimelineTheme>();
     return identical(this, timelineTheme)
         ? child
