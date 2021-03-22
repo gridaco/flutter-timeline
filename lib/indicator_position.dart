@@ -7,14 +7,10 @@ extension Mapper on IndicatorPosition {
     switch (this) {
       case IndicatorPosition.top:
         return Alignment.topCenter;
-        break;
       case IndicatorPosition.center:
         return Alignment.center;
-        break;
       case IndicatorPosition.bottom:
         return Alignment.bottomCenter;
-        break;
     }
-    return Alignment.center;
   }
 }

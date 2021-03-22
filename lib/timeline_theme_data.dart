@@ -27,9 +27,6 @@ class TimelineThemeData with Diagnosticable {
   /// the position of the indicator. this affects the placing of the indicator, and following line measurement
   final IndicatorPosition indicatorPosition;
 
-  /// Whether all the properties of this object are non-null.
-  bool get isConcrete => lineColor != null; // &&
-
   /// Creates an timeline them with some reasonable default values.
   ///
   /// The [color] is black, the [opacity] is 1.0, and the [size] is 24.0.
@@ -44,7 +41,7 @@ class TimelineThemeData with Diagnosticable {
         indicatorPosition = IndicatorPosition.center;
 
   TimelineThemeData copyWith(
-      {Color lineColor, StrokeCap strokeCap, double strokeWidth}) {
+      {Color? lineColor, StrokeCap? strokeCap, double? strokeWidth}) {
     return TimelineThemeData(
       lineColor: lineColor ?? this.lineColor,
       strokeCap: strokeCap ?? this.strokeCap,

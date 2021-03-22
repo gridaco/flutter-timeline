@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DessertStoriesDemoScreen extends StatefulWidget {
-  DessertStoriesDemoScreen({Key key}) : super(key: key);
+  DessertStoriesDemoScreen({Key? key}) : super(key: key);
 
   @override
   _DessertStoriesDemoScreenState createState() => _DessertStoriesDemoScreenState();

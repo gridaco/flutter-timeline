@@ -52,7 +52,7 @@ List<DemoScreen> demos = [
 ];
 
 class DemoHomePage extends StatefulWidget {
-  DemoHomePage({Key key, this.title}) : super(key: key);
+  DemoHomePage({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
@@ -93,13 +93,13 @@ class _DemoHomePageState extends State<DemoHomePage> {
 
 class DemoScreen {
   DemoScreen(
-      {@required this.name,
-      @required this.description,
-      @required this.cover,
-      @required this.route});
+      {required this.name,
+      required this.description,
+      this.cover,
+      required this.route});
 
   final String name;
   final String description;
-  final String cover;
+  final String? cover;
   final String route;
 }

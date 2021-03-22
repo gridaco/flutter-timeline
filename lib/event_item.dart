@@ -4,7 +4,7 @@ import 'indicator_position.dart';
 
 class TimelineEventDisplay {
   TimelineEventDisplay({
-    @required @required this.child,
+    required this.child,
     this.indicator,
     this.indicatorSize,
     this.forceLineDrawing = false,
@@ -15,14 +15,14 @@ class TimelineEventDisplay {
   final Widget child;
 
   /// if not provided, use the default indicator size
-  final double indicatorSize;
-  final Widget indicator;
+  final double? indicatorSize;
+  final Widget? indicator;
 
   /// enables indicator line drawing even no indicator is passed.
   final bool forceLineDrawing;
 
   /// [anchor] overrides the default IndicatorPosition
-  final IndicatorPosition anchor;
+  final IndicatorPosition? anchor;
   final Offset indicatorOffset;
 
   bool get hasIndicator {
@@ -39,7 +39,7 @@ class TimelineEventCard extends StatelessWidget {
   final Widget title;
   final Widget content;
 
-  TimelineEventCard({@required this.title, @required this.content});
+  TimelineEventCard({required this.title, required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +67,16 @@ class TimelineEventCard extends StatelessWidget {
 
   Widget _title(BuildContext context) {
     return DefaultTextStyle(
-        style: Theme.of(context).textTheme.subtitle1, child: title);
+      style: Theme.of(context).textTheme.subtitle1 ?? TextStyle(),
+      child: title,
+    );
   }
 
   Widget _description(BuildContext context) {
     return DefaultTextStyle(
-        style: Theme.of(context).textTheme.overline, child: content);
+      style: Theme.of(context).textTheme.overline ?? TextStyle(),
+      child: content,
+    );
   }
 }
 
@@ -85,7 +89,7 @@ class TimelineSectionDivider extends StatelessWidget {
     );
   }
 
-  const TimelineSectionDivider({Key key, @required this.content})
+  const TimelineSectionDivider({Key? key, required this.content})
       : super(key: key);
 
   @override
@@ -96,7 +100,7 @@ class TimelineSectionDivider extends StatelessWidget {
   Widget _content(BuildContext context) {
     return AnimatedDefaultTextStyle(
         child: content,
-        style: Theme.of(context).textTheme.headline5,
+        style: Theme.of(context).textTheme.headline5 ?? TextStyle(),
         duration: kThemeChangeDuration);
   }
 }

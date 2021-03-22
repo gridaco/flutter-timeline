@@ -89,7 +89,7 @@ class _PlainTimelineDemoScreenState extends State<PlainTimelineDemoScreen> {
         indicator: randomIndicator);
   }
 
-  List<TimelineEventDisplay> events;
+  late List<TimelineEventDisplay> events;
 
   Widget _buildTimeline() {
     return TimelineTheme(
