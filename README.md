@@ -101,9 +101,6 @@ Widget _buildTimeline() {
 
 
 
-## references
-https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
-
 
 ## complex example
 
@@ -119,6 +116,14 @@ https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
 more documentation available at [github](https://github.com/softmarshmallow/flutter-timeline)
 
 
+## Sponsors
+- [Bridged](https://bridged.xyz) ([github](https:github.com/bridgedxyz))
+
+
 ## Also check out...
 [flutter_layouts](https://github.com/softmarshmallow/flutter-layouts)
+
+
+## references
+https://www.pinterest.com/official_softmarshmallow/flutter-timeline/
 
