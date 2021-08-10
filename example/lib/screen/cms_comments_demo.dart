@@ -47,7 +47,7 @@ class _DeskTimelineDemoScreenState extends State<DeskTimelineDemoScreen> {
     return Text(
       "Today",
       style:
-          Theme.of(context).textTheme.headline5.copyWith(color: Colors.amber),
+          Theme.of(context).textTheme.headline5?.copyWith(color: Colors.amber),
     );
   }
 
