@@ -3,6 +3,7 @@ description: a fully customizable & general timeline widget, based on real-world
 version: 0.2.0+14
 homepage: https://github.com/softmarshmallow/flutter-timeline
 repository: https://github.com/softmarshmallow/flutter-timeline
+license: MIT
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
@@ -14,8 +15,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-
 
 flutter:
 #
