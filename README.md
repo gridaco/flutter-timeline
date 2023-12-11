@@ -105,7 +105,9 @@ more documentation available at [github](https://github.com/softmarshmallow/flut
 
 ## Sponsors
 
-- [Bridged](https://bridged.xyz) ([github](https:github.com/bridgedxyz))
+
+[![sponsored-by-grida](https://s3.us-west-1.amazonaws.com/brand.grida.co/badges-for-github/sponsored-by-grida-oss-program.png)](https://grida.co)
+
 
 ## Also check out...
 
