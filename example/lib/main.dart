@@ -2,7 +2,6 @@ import 'package:example/screen/cms_comments_demo.dart';
 import 'package:example/screen/github_activity_demo.dart';
 import 'package:example/screen/plain_timeline_demo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_timeline/flutter_timeline.dart';
 
 void main() {
   runApp(TimelineDemoApp());
