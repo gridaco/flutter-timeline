@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_timeline/flutter_timeline.dart';
 import 'package:flutter_timeline/indicator_position.dart';
-import 'package:flutter_timeline/timeline_theme.dart';
-import 'package:flutter_timeline/timeline_theme_data.dart';
 
 class PlainTimelineDemoScreen extends StatefulWidget {
   static const routeName = "/demo/plain";

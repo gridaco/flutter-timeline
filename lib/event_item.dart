@@ -43,7 +43,8 @@ class TimelineEventCard extends StatelessWidget {
   TimelineEventCard({
     required this.title,
     required this.content,
-    this.padding = const EdgeInsets.only(left: 16, top: 12, right: 16, bottom: 20),
+    this.padding =
+        const EdgeInsets.only(left: 16, top: 12, right: 16, bottom: 20),
   });
 
   @override
@@ -72,14 +73,14 @@ class TimelineEventCard extends StatelessWidget {
 
   Widget _title(BuildContext context) {
     return DefaultTextStyle(
-      style: Theme.of(context).textTheme.subtitle1 ?? TextStyle(),
+      style: Theme.of(context).textTheme.titleMedium ?? TextStyle(),
       child: title,
     );
   }
 
   Widget _description(BuildContext context) {
     return DefaultTextStyle(
-      style: Theme.of(context).textTheme.overline ?? TextStyle(),
+      style: Theme.of(context).textTheme.labelSmall ?? TextStyle(),
       child: content,
     );
   }
@@ -105,7 +106,7 @@ class TimelineSectionDivider extends StatelessWidget {
   Widget _content(BuildContext context) {
     return AnimatedDefaultTextStyle(
         child: content,
-        style: Theme.of(context).textTheme.headline5 ?? TextStyle(),
+        style: Theme.of(context).textTheme.headlineSmall ?? TextStyle(),
         duration: kThemeChangeDuration);
   }
 }
