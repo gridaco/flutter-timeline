@@ -91,7 +91,7 @@ class TimelineMonthHeading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "data",
-      style: Theme.of(context).textTheme.headline3,
+      style: Theme.of(context).textTheme.displaySmall,
     );
   }
 }

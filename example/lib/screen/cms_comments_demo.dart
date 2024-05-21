@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_timeline/flutter_timeline.dart';
-import 'package:flutter_timeline/timeline.dart';
 
 class DeskTimelineDemoScreen extends StatefulWidget {
   static const routeName = "/demo/cms-comments";
@@ -33,7 +32,7 @@ class _DeskTimelineDemoScreenState extends State<DeskTimelineDemoScreen> {
               ),
               Text(
                 "timeline",
-                style: Theme.of(context).textTheme.headline6,
+                style: Theme.of(context).textTheme.titleLarge,
               )
             ],
           ),
@@ -46,8 +45,10 @@ class _DeskTimelineDemoScreenState extends State<DeskTimelineDemoScreen> {
   _buildTodaySection() {
     return Text(
       "Today",
-      style:
-          Theme.of(context).textTheme.headline5?.copyWith(color: Colors.amber),
+      style: Theme.of(context)
+          .textTheme
+          .headlineSmall
+          ?.copyWith(color: Colors.amber),
     );
   }
 

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_timeline/event_item.dart';
 import 'package:flutter_timeline/timeline_theme.dart';
